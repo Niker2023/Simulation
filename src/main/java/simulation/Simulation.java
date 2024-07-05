@@ -1,10 +1,11 @@
+package main.java.simulation;
+
 import main.java.simulation.board.Coordinates;
 import main.java.simulation.board.DisplayField;
 import main.java.simulation.board.GenerateField;
 import main.java.simulation.board.MapConsoleRender;
 import main.java.simulation.entities.*;
 import main.java.simulation.actions.Actions;
-import main.java.simulation.WorldMap;
 
 import java.util.*;
 
