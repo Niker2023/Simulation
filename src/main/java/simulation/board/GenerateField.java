@@ -1,9 +1,8 @@
-package Board;
+package main.java.simulation.board;
 
-import Entities.*;
+import main.java.simulation.entities.*;
 
 import java.util.HashMap;
-import java.util.HashSet;
 
 public class GenerateField {
 

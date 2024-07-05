@@ -1,6 +1,6 @@
-package Board;
+package main.java.simulation.board;
 
-import Entities.Entity;
+import main.java.simulation.entities.Entity;
 import java.util.HashMap;
 
 public class DisplayField {

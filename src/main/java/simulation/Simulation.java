@@ -1,19 +1,35 @@
-import Board.Coordinates;
-import Board.DisplayField;
-import Board.GenerateField;
-import Entities.*;
+import main.java.simulation.board.Coordinates;
+import main.java.simulation.board.DisplayField;
+import main.java.simulation.board.GenerateField;
+import main.java.simulation.board.MapConsoleRender;
+import main.java.simulation.entities.*;
+import main.java.simulation.actions.Actions;
+import main.java.simulation.WorldMap;
 
-import java.awt.*;
 import java.util.*;
-import java.util.concurrent.TimeUnit;
+
 
 public class Simulation implements Runnable {
 
     private static boolean pause = false;
-
     private static boolean simulationAtWork = true;
-
     private static int round = 1;
+    private WorldMap worldMap;
+    private Actions action;
+    private MapConsoleRender mapConsoleRender;
+
+    public static void startSimulation() {
+
+
+    }
+
+    public static void nextTurn() {
+
+    }
+
+    public static void pauseSimulation() {
+
+    }
 
     public static HashMap<Coordinates, Entity> nextTurn(HashMap<Coordinates, Entity> map) {
         HashMap<Coordinates, Entity> newMap = new HashMap<>();

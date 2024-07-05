@@ -1,7 +1,7 @@
-package Entities;
+package main.java.simulation.entities;
 
-import Board.Coordinates;
-import Board.GenerateField;
+import main.java.simulation.board.Coordinates;
+import main.java.simulation.board.GenerateField;
 
 import java.util.*;
 
@@ -12,8 +12,7 @@ public abstract class Creature extends Entity {
 
     private int hp;
 
-    public Creature(String id, int hp) {
-        super(id);
+    public Creature(int hp) {
         this.hp = hp;
     }
 

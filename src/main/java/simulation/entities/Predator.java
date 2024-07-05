@@ -1,7 +1,7 @@
-package Entities;
+package main.java.simulation.entities;
 
-import Board.Coordinates;
-import Board.GenerateField;
+import main.java.simulation.board.Coordinates;
+import main.java.simulation.board.GenerateField;
 
 import java.util.*;
 

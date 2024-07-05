@@ -1,6 +1,6 @@
-package Entities;
+package main.java.simulation.entities;
 
-import Board.Coordinates;
+import main.java.simulation.board.Coordinates;
 
 import java.util.ArrayList;
 import java.util.HashMap;

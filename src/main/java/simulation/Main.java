@@ -1,4 +1,6 @@
-import Board.GenerateField;
+package main.java.simulation;
+
+import main.java.simulation.board.GenerateField;
 
 public class Main {
     public static void main(String[] args) {
