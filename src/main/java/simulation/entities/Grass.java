@@ -9,31 +9,15 @@ import java.util.List;
 public class Grass extends Entity {
     private int growthProgress;
 
-    private static List<Coordinates> populationGrass = new ArrayList<>();
-
-    public Grass(int growthProgress) {
-        super("");
-        this.growthProgress = growthProgress;
+    public Grass() {
+        this.growthProgress = 3;
         changeDisplayProgress();
-    }
-
-    public Grass(int growthProgress, Coordinates coordinates) {
-        super("");
-        this.growthProgress = growthProgress;
-        changeDisplayProgress();
-        populationGrass.add(coordinates);
-    }
-
-    public void increasePopulationGrass(Coordinates coordinates) {
-        populationGrass.add(coordinates);
     }
 
     public void growUp() {
         if (growthProgress < 3) {
             growthProgress++;
         }
-        changeDisplayProgress();
-
     }
 
     public Coordinates getTheNearestGrass(Coordinates coordinates) {
@@ -63,11 +47,6 @@ public class Grass extends Entity {
             populationGrass.remove(currentCoordinate);
         }
         return currentCoordinate;
-    }
-
-    public void changeGrowProgress(int growthProgress) {
-        this.growthProgress = this.growthProgress + growthProgress;
-        changeDisplayProgress();
     }
 
     private void changeDisplayProgress() {

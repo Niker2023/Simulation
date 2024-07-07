@@ -1,11 +1,13 @@
 package main.java.simulation;
 
+import main.java.simulation.actions.MoveMaker;
+import main.java.simulation.actions.PlaceTree;
 import main.java.simulation.board.Coordinates;
 import main.java.simulation.board.DisplayField;
 import main.java.simulation.board.GenerateField;
 import main.java.simulation.board.MapConsoleRender;
 import main.java.simulation.entities.*;
-import main.java.simulation.actions.Actions;
+import main.java.simulation.actions.Action;
 
 import java.util.*;
 
@@ -15,12 +17,29 @@ public class Simulation implements Runnable {
     private static boolean pause = false;
     private static boolean simulationAtWork = true;
     private static int round = 1;
-    private WorldMap worldMap;
-    private Actions action;
+    private static WorldMap worldMap;
+    private Action action;
     private MapConsoleRender mapConsoleRender;
+    private static List<Action> initActions;
+    private static List<Action> turnAction;
+
+
+    public static void initialConfiguration() {
+        worldMap = worldMap.get();
+        createActions();
+        for (Action action : initActions) {
+            action.perform(worldMap);
+        }
+
+    }
+
+    private static void createActions() {
+        initActions.add(new PlaceTree());
+
+        turnAction.add(new MoveMaker());
+    }
 
     public static void startSimulation() {
-
 
     }
 

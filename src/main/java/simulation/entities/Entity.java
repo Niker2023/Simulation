@@ -4,7 +4,7 @@ import main.java.simulation.board.Coordinates;
 
 public abstract class Entity {
 
-    private Coordinates coordinate;
+/*    private Coordinates coordinate;
 
     public Entity(Coordinates coordinate) {
         this.coordinate = coordinate;
@@ -17,7 +17,7 @@ public abstract class Entity {
 
     public void setCoordinate(Coordinates coordinate) {
         this.coordinate = coordinate;
-    }
+    }*/
 }
 
 

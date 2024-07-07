@@ -20,10 +20,6 @@ public abstract class Creature extends Entity {
         return hp;
     }
 
-    public void setHp(int hp) {
-        this.hp = hp;
-    }
-
     public void changeHP(int hp){
         this.hp = this.hp + hp;
         if (this.hp > 9) this.hp = 9;

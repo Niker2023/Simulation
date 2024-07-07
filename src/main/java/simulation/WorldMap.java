@@ -1,21 +1,42 @@
 package main.java.simulation;
 
 import main.java.simulation.board.Coordinates;
-import main.java.simulation.entities.Creature;
-import main.java.simulation.entities.Entity;
+import main.java.simulation.board.GenerateField;
+import main.java.simulation.entities.*;
 
 import java.util.HashMap;
 import java.util.Map;
 
 public class WorldMap {
 
-    private Map<Coordinates, Entity> worldMap = new HashMap<>();
-    private static int row;
-    private static int column;
+    private static Map<Coordinates, Entity> worldMap;
+    private static int rows = 0;
+    private static int columns = 0;
+    private static boolean isReadyToPlacement = false;
 
+    public static void setRow(int numberRows) {
+        rows = numberRows;
+        if (columns != 0) {
+            isReadyToPlacement = true;
+        }
+    }
 
-    public Map<Coordinates, Entity> get() {
-        return worldMap;
+    public static void setColumn(int numberColumns) {
+        columns = numberColumns;
+        if (rows != 0) {
+            isReadyToPlacement = true;
+        }
+    }
+
+    public boolean isReadyToPlacement() {
+        return isReadyToPlacement;
+    }
+
+    public WorldMap get() {
+        if (worldMap == null) {
+            worldMap = new HashMap<>();
+        }
+        return (WorldMap) worldMap;
     }
 
     public void placeEntity(Coordinates coordinates, Entity entity) {
@@ -39,19 +60,12 @@ public class WorldMap {
         return worldMap.containsKey(coordinates);
     }
 
-    public static int getRow() {
-        return row;
+    public int getRow() {
+        return rows;
     }
 
-    public static void setRow(int row) {
-        WorldMap.row = row;
+    public int getColumn() {
+        return columns;
     }
 
-    public static int getColumn() {
-        return column;
-    }
-
-    public static void setColumn(int column) {
-        WorldMap.column = column;
-    }
 }
