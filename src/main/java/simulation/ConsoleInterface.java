@@ -12,10 +12,12 @@ public class ConsoleInterface implements Runnable {
         try (BufferedReader br = new BufferedReader(new InputStreamReader(System.in))) {
             System.out.println("Введите размер мира, сначала количество строк, " +
                     "затем количество столбцов (пример: 10, Enter, 10, Enter):");
-            WorldMap.setRow(inputNumber(br));
-            WorldMap.setColumn(inputNumber(br));
+//            WorldMap.setRow(inputNumber(br));
+//            WorldMap.setColumn(inputNumber(br));
+            WorldMap.setRow(7);
+            WorldMap.setColumn(7);
             System.out.println("Мир создан!");
-            System.out.println("Для паузы либо продолжения нажмите Enter, для завершения симуляции введите любой символ.");
+            System.out.print("Для паузы либо продолжения нажмите Enter, для завершения симуляции введите любой символ.");
             while (br.readLine().isEmpty()) {
                 try {
                     TimeUnit.MILLISECONDS.sleep(1);
@@ -23,7 +25,7 @@ public class ConsoleInterface implements Runnable {
                     throw new RuntimeException(e);
                 }
                 if (!Simulation.isPause()) {
-                    System.out.println("Пауза, для продолжение нажмите Enter, для завершения симуляции введите любой символ.");
+                    System.out.print("Пауза, для продолжение нажмите Enter, для завершения симуляции введите любой символ.");
                 }
                 Simulation.setPause(!Simulation.isPause());
             }

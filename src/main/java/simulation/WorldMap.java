@@ -1,7 +1,6 @@
 package main.java.simulation;
 
 import main.java.simulation.board.Coordinates;
-import main.java.simulation.board.GenerateField;
 import main.java.simulation.entities.*;
 
 import java.util.HashMap;
@@ -13,6 +12,12 @@ public class WorldMap {
     private static int rows = 0;
     private static int columns = 0;
     private static boolean isReadyToPlacement = false;
+
+    private static WorldMap instance;
+
+    private WorldMap() {
+        worldMap = new HashMap<>();
+    }
 
     public static void setRow(int numberRows) {
         rows = numberRows;
@@ -28,15 +33,15 @@ public class WorldMap {
         }
     }
 
-    public boolean isReadyToPlacement() {
+    public static boolean isReadyToPlacement() {
         return isReadyToPlacement;
     }
 
-    public WorldMap get() {
-        if (worldMap == null) {
-            worldMap = new HashMap<>();
+    public static WorldMap get() {
+        if (instance == null) {
+            instance = new WorldMap();
         }
-        return (WorldMap) worldMap;
+        return instance;
     }
 
     public void placeEntity(Coordinates coordinates, Entity entity) {
@@ -56,7 +61,7 @@ public class WorldMap {
         worldMap.put(to, entity);
     }
 
-    public boolean isEmptyCoordinates(Coordinates coordinates) {
+    public boolean isContainsCoordinates(Coordinates coordinates) {
         return worldMap.containsKey(coordinates);
     }
 
@@ -67,5 +72,4 @@ public class WorldMap {
     public int getColumn() {
         return columns;
     }
-
 }

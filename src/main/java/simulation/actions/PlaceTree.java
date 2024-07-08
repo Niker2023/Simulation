@@ -20,10 +20,10 @@ public class PlaceTree extends Action {
                     } else if (Math.random() < 0.05) {
                         worldMap.placeEntity(new Coordinates(column, row), new Rock());
                     } else if (Math.random() < 0.05) {
-                        worldMap.placeEntity(new Coordinates(column, row), new Herbivore(8));
+                        worldMap.placeEntity(new Coordinates(column, row), new Herbivore());
                         isHerbivore = true;
                     } else if (Math.random() < 0.15) {
-                        worldMap.placeEntity(new Coordinates(column, row), new Grass());
+                        worldMap.placeEntity(new Coordinates(column, row), new Grass(false));
                     }
                 }
             }
