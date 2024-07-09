@@ -59,9 +59,10 @@ public class WorldMap {
     public void moveCreates(Coordinates from, Coordinates to) {
         Entity entity = worldMap.get(from);
         worldMap.put(to, entity);
+        worldMap.remove(from);
     }
 
-    public boolean isContainsCoordinates(Coordinates coordinates) {
+    public boolean isContainsEntity(Coordinates coordinates) {
         return worldMap.containsKey(coordinates);
     }
 

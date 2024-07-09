@@ -1,11 +1,6 @@
 package main.java.simulation;
 
-import main.java.simulation.actions.GrassGrower;
-import main.java.simulation.actions.MoveMaker;
-import main.java.simulation.actions.PlaceTree;
-import main.java.simulation.board.Coordinates;
-import main.java.simulation.board.MapConsoleRender;
-import main.java.simulation.actions.Action;
+import main.java.simulation.actions.*;
 
 import java.util.*;
 
@@ -16,8 +11,6 @@ public class Simulation implements Runnable {
     private static boolean simulationAtWork = true;
     private static int round = 1;
     private static WorldMap worldMap;
-    private Action action;
-    private MapConsoleRender mapConsoleRender;
     private static List<Action> initActions;
     private static List<Action> turnAction;
 
@@ -35,9 +28,15 @@ public class Simulation implements Runnable {
         turnAction = new ArrayList<>();
 
         initActions.add(new PlaceTree());
+        initActions.add(new PlaceRock());
+        initActions.add(new PlaceGrass());
+        initActions.add(new PlaceHerbivore());
 
+        turnAction.add(new PrepareCreatureToMove());
         turnAction.add(new MoveMaker());
         turnAction.add(new GrassGrower());
+        turnAction.add(new MapCleaner());
+
     }
 
     private static void checkPause() {

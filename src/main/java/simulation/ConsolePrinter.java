@@ -9,6 +9,14 @@ import main.java.simulation.entities.Predator;
 
 public class ConsolePrinter {
 
+    private static final String RED_COLOR = "\u001B[31m";
+    private static final String RESET_COLOR = "\u001B[0m";
+    public static final String GREEN_COLOR = "\u001B[32m";
+    public static final String YELLOW_COLOR = "\u001B[33m";
+    public static final String BLUE_COLOR = "\u001B[34m";
+    public static final String PURPLE_COLOR = "\u001B[35m";
+    public static final String CYAN_COLOR = "\u001B[36m";
+
     public static void displayRoundCount(int round) {
         System.out.println();
         System.out.println("День " + round + ".");
@@ -25,7 +33,7 @@ public class ConsolePrinter {
                 if (column == 0) {
                     System.out.print(MapConsoleRender.HORIZONTAL_BORDER);
                 }
-                if (worldMap.isContainsCoordinates(new Coordinates(column, row))) {
+                if (worldMap.isContainsEntity(new Coordinates(column, row))) {
                     System.out.print(entitiesRender(worldMap.getEntity((new Coordinates(column, row)))));
                 } else {
                     System.out.print(MapConsoleRender.EMPTY_AREA);
@@ -46,18 +54,18 @@ public class ConsolePrinter {
         switch (entity.getClass().getSimpleName()) {
             case "Grass":
                 if (((Grass) entity).getGrowthProgress() < 3) {
-                    return MapConsoleRender.GROWING_GRASS_RENDER;
+                    return GREEN_COLOR + MapConsoleRender.GROWING_GRASS_RENDER + RESET_COLOR;
                 } else {
-                    return MapConsoleRender.GROWN_GRASS_RENDER;
+                    return GREEN_COLOR + MapConsoleRender.GROWN_GRASS_RENDER + RESET_COLOR;
                 }
             case "Rock":
-                return MapConsoleRender.ROCK_RENDER;
+                return YELLOW_COLOR + MapConsoleRender.ROCK_RENDER + RESET_COLOR;
             case "Tree":
-                return MapConsoleRender.TREE_RENDER;
+                return GREEN_COLOR + MapConsoleRender.TREE_RENDER + RESET_COLOR;
             case "Herbivore":
-                return MapConsoleRender.HERBIVORE_RENDER + ((Herbivore) entity).getHp();
+                return CYAN_COLOR + MapConsoleRender.HERBIVORE_RENDER + ((Herbivore) entity).getHp() + RESET_COLOR;
             case "Predator":
-                return MapConsoleRender.PREDATOR_RENDER + ((Predator) entity).getHp();
+                return PURPLE_COLOR + MapConsoleRender.PREDATOR_RENDER + ((Predator) entity).getHp() + RESET_COLOR;
             default:
                 throw new IllegalStateException("Unexpected value: " + entity.getClass().getSimpleName());
         }

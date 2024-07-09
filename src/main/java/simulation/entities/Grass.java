@@ -18,7 +18,7 @@ public class Grass extends Entity {
     }
 
     public void growUp() {
-        if (growthProgress < 3) {
+        if (growthProgress < 3 && growthProgress != 0) {
             growthProgress++;
         }
     }
@@ -52,18 +52,8 @@ public class Grass extends Entity {
 //        return currentCoordinate;
 //    }
 
-//    private void changeDisplayProgress() {
-//        if (growthProgress >= 1 & growthProgress < 3) {
-//            setDisplay(" .. ");
-//        }
-//        if (growthProgress >= 3) {
-//            setDisplay("....");
-//        }
-//    }
-
-//    public void eatIt() {
-//        growthProgress = growthProgress - 2;
-//        changeDisplayProgress();
-//    }
+    public void eatIt() {
+        growthProgress = growthProgress - 2;
+    }
 }
 

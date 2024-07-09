@@ -14,8 +14,8 @@ public class ConsoleInterface implements Runnable {
                     "затем количество столбцов (пример: 10, Enter, 10, Enter):");
 //            WorldMap.setRow(inputNumber(br));
 //            WorldMap.setColumn(inputNumber(br));
-            WorldMap.setRow(7);
-            WorldMap.setColumn(7);
+            WorldMap.setRow(9);
+            WorldMap.setColumn(9);
             System.out.println("Мир создан!");
             System.out.print("Для паузы либо продолжения нажмите Enter, для завершения симуляции введите любой символ.");
             while (br.readLine().isEmpty()) {

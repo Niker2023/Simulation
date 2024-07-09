@@ -1,20 +1,34 @@
 package main.java.simulation.entities;
 
-import java.util.*;
+import java.util.List;
 
 public abstract class Creature extends Entity {
 
-    static final int attackPower = 3;
-    static final int hungerDamage = -1;
-
+    static final int ATTACK_POWER = 3;
+    static final int HUNGER_DAMAGE = -1;
+    private boolean readyToMove;
+    private final String prefersFood;
     private int hp;
 
-    public Creature() {
+    public boolean isReadyToMove() {
+        return readyToMove;
+    }
+
+    public void setReadyToMove(boolean readyToMove) {
+        this.readyToMove = readyToMove;
+    }
+    public Creature(String prefersFood) {
+        this.prefersFood = prefersFood;
         this.hp = 8;
+        this.readyToMove = true;
     }
 
     public int getHp() {
         return hp;
+    }
+
+    public String getPrefersFood() {
+        return prefersFood;
     }
 
     public void changeHP(int hp){

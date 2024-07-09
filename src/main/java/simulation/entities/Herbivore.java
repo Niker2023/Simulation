@@ -4,7 +4,7 @@ public class Herbivore extends Creature {
 
 
     public Herbivore() {
-        super();
+        super("Grass");
     }
 
 //    @Override
