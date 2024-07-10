@@ -27,7 +27,7 @@ public class ConsoleInterface implements Runnable {
                 if (!Simulation.isPause()) {
                     System.out.print("Пауза, для продолжение нажмите Enter, для завершения симуляции введите любой символ.");
                 }
-                Simulation.setPause(!Simulation.isPause());
+                Simulation.pauseSimulation(!Simulation.isPause());
             }
             System.out.println("Симуляция завершена!");
             Simulation.stopSimulation();
