@@ -1,6 +1,6 @@
 package main.java.simulation.actions;
 
-import main.java.simulation.WorldMap;
+import main.java.simulation.world.WorldMap;
 
 public abstract class Action {
 

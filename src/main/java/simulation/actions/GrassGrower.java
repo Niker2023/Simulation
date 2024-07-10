@@ -1,7 +1,7 @@
 package main.java.simulation.actions;
 
-import main.java.simulation.WorldMap;
-import main.java.simulation.board.Coordinates;
+import main.java.simulation.world.WorldMap;
+import main.java.simulation.world.Coordinates;
 import main.java.simulation.entities.Grass;
 
 public class GrassGrower extends Action{
@@ -15,7 +15,7 @@ public class GrassGrower extends Action{
                     if ((worldMap.getEntity(currentCoordinates)).getClass().getSimpleName().equals("Grass")) {
                         ((Grass) worldMap.getEntity(currentCoordinates)).growUp();
                     }
-                } else if (Math.random() < 0.01) {
+                } else if (Math.random() < 0.02) {
                     worldMap.placeEntity(currentCoordinates, new Grass(true));
                 }
             }

@@ -1,6 +1,7 @@
 package main.java.simulation;
 
 import main.java.simulation.actions.*;
+import main.java.simulation.world.WorldMap;
 
 import java.util.*;
 
@@ -27,15 +28,16 @@ public class Simulation implements Runnable {
         initActions = new ArrayList<>();
         turnAction = new ArrayList<>();
 
-        initActions.add(new PlaceTree());
-        initActions.add(new PlaceRock());
-        initActions.add(new PlaceGrass());
-        initActions.add(new PlaceHerbivore());
+        initActions.add(new PopulateTree());
+        initActions.add(new PopulateRock());
+        initActions.add(new PopulateGrass());
+        initActions.add(new PopulateCreatures());
 
-        turnAction.add(new PrepareCreatureToMove());
+        turnAction.add(new PrepareCreaturesToMove());
         turnAction.add(new MoveMaker());
         turnAction.add(new GrassGrower());
         turnAction.add(new MapCleaner());
+        turnAction.add(new MigrateCreators());
 
     }
 

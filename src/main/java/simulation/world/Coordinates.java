@@ -1,4 +1,4 @@
-package main.java.simulation.board;
+package main.java.simulation.world;
 
 public class Coordinates {
     private final int column;

@@ -1,6 +1,5 @@
-package main.java.simulation;
+package main.java.simulation.world;
 
-import main.java.simulation.board.Coordinates;
 import main.java.simulation.entities.*;
 
 import java.util.HashMap;

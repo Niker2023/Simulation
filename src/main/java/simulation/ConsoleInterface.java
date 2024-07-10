@@ -1,5 +1,7 @@
 package main.java.simulation;
 
+import main.java.simulation.world.WorldMap;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -12,10 +14,8 @@ public class ConsoleInterface implements Runnable {
         try (BufferedReader br = new BufferedReader(new InputStreamReader(System.in))) {
             System.out.println("Введите размер мира, сначала количество строк, " +
                     "затем количество столбцов (пример: 10, Enter, 10, Enter):");
-//            WorldMap.setRow(inputNumber(br));
-//            WorldMap.setColumn(inputNumber(br));
-            WorldMap.setRow(9);
-            WorldMap.setColumn(9);
+            WorldMap.setRow(inputNumber(br));
+            WorldMap.setColumn(inputNumber(br));
             System.out.println("Мир создан!");
             System.out.print("Для паузы либо продолжения нажмите Enter, для завершения симуляции введите любой символ.");
             while (br.readLine().isEmpty()) {

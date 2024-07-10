@@ -1,7 +1,7 @@
 package main.java.simulation.actions;
 
-import main.java.simulation.WorldMap;
-import main.java.simulation.board.Coordinates;
+import main.java.simulation.world.WorldMap;
+import main.java.simulation.world.Coordinates;
 import main.java.simulation.entities.Creature;
 import main.java.simulation.entities.Grass;
 
@@ -17,8 +17,9 @@ public class MapCleaner extends Action{
                         if (((Grass) worldMap.getEntity(currentCoordinates)).getGrowthProgress() <= 0) {
                             worldMap.remoteEntity(currentCoordinates);
                         }
-                    } else if (worldMap.getEntity(currentCoordinates).getClass().getSimpleName().equals("Creature")) {
-                        if (((Creature) worldMap.getEntity(currentCoordinates)).getHp() <= 0) {
+                    } else if (worldMap.getEntity(currentCoordinates).getClass().getSimpleName().equals("Herbivore") ||
+                            worldMap.getEntity(currentCoordinates).getClass().getSimpleName().equals("Predator")) {
+                        if (((Creature) worldMap.getEntity(currentCoordinates)).getHitPoints() <= 0) {
                             worldMap.remoteEntity(currentCoordinates);
                         }
                     }

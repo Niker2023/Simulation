@@ -1,7 +1,7 @@
 package main.java.simulation.actions;
 
-import main.java.simulation.WorldMap;
-import main.java.simulation.board.Coordinates;
+import main.java.simulation.world.WorldMap;
+import main.java.simulation.world.Coordinates;
 import main.java.simulation.entities.Creature;
 import main.java.simulation.entities.Entity;
 import main.java.simulation.entities.Grass;
@@ -16,7 +16,8 @@ public class MoveMaker extends Action {
             for (int row = 0; row < worldMap.getRow(); row++) {
                 Coordinates currentCoordinates = new Coordinates(column, row);
                 if (worldMap.isContainsEntity(currentCoordinates)
-                        && worldMap.getEntity(currentCoordinates) instanceof Creature
+                        && (worldMap.getEntity(currentCoordinates).getClass().getSimpleName().equals("Herbivore")
+                        || worldMap.getEntity(currentCoordinates).getClass().getSimpleName().equals("Predator"))
                         && ((Creature) worldMap.getEntity(currentCoordinates)).isReadyToMove()) {
                     Creature creature = (Creature) worldMap.getEntity(currentCoordinates);
                     Coordinates coordinatesForAction = getCoordinatesForAction(worldMap, currentCoordinates, creature.getPrefersFood());
@@ -36,12 +37,13 @@ public class MoveMaker extends Action {
         }
 
     private void eatFood(Creature creature, Entity entity) {
-        creature.changeHP(2);
+        creature.increaseHitPoints(creature.getAttackPower());
         if (entity.getClass().getSimpleName().equals("Grass")) {
-            ((Grass) entity).eatIt();
+            ((Grass) entity).eatIt(creature.getAttackPower());
+        } else {
+            ((Creature) entity).reduceHitPoints(creature.getAttackPower());
         }
     }
-
 
     private HashSet<Coordinates> getAvailableNearbyCoordinates(WorldMap worldMap, Coordinates currentCoordinates, String targetMove) {
         HashSet<Coordinates> seAvailableNearbyCoordinates = new HashSet<>();
@@ -60,14 +62,13 @@ public class MoveMaker extends Action {
         return seAvailableNearbyCoordinates;
     }
 
-
     private boolean isValidCoordinate(Coordinates coordinates) {
         return coordinates.getColumn() >= 0 && coordinates.getColumn() < WorldMap.get().getColumn()
                 && coordinates.getRow() >= 0 && coordinates.getRow() < WorldMap.get().getRow();
     }
 
     private void hungryDamage(Creature creature) {
-        creature.changeHP(-1);
+        creature.getHungerDamage();
     }
 
     private Coordinates getCoordinatesForAction(WorldMap worldMap, Coordinates currentCoordinate, String targetMove) {

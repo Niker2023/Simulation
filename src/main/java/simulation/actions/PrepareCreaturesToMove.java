@@ -1,10 +1,11 @@
 package main.java.simulation.actions;
 
-import main.java.simulation.WorldMap;
-import main.java.simulation.board.Coordinates;
+import main.java.simulation.world.WorldMap;
+import main.java.simulation.world.Coordinates;
 import main.java.simulation.entities.Creature;
 
-public class PrepareCreatureToMove extends Action {
+public class PrepareCreaturesToMove extends Action {
+
     @Override
     public void perform(WorldMap worldMap) {
         for (int column = 0; column < worldMap.getColumn(); column++) {

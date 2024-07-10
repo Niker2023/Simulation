@@ -1,10 +1,10 @@
 package main.java.simulation.actions;
 
-import main.java.simulation.WorldMap;
-import main.java.simulation.board.Coordinates;
+import main.java.simulation.world.WorldMap;
+import main.java.simulation.world.Coordinates;
 import main.java.simulation.entities.Rock;
 
-public class PlaceRock extends Action {
+public class PopulateRock extends Action {
 
     @Override
     public void perform(WorldMap worldMap) {

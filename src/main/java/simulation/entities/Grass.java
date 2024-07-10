@@ -1,11 +1,5 @@
 package main.java.simulation.entities;
 
-import main.java.simulation.board.Coordinates;
-
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-
 public class Grass extends Entity {
     private int growthProgress;
 
@@ -52,8 +46,8 @@ public class Grass extends Entity {
 //        return currentCoordinate;
 //    }
 
-    public void eatIt() {
-        growthProgress = growthProgress - 2;
+    public void eatIt(int eatPower) {
+        growthProgress = growthProgress - eatPower;
     }
 }
 

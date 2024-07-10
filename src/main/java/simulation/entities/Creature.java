@@ -1,14 +1,14 @@
 package main.java.simulation.entities;
 
-import java.util.List;
-
 public abstract class Creature extends Entity {
 
-    static final int ATTACK_POWER = 3;
-    static final int HUNGER_DAMAGE = -1;
+
+
+    private int attackPower;
+    private final int hungerDamage;
     private boolean readyToMove;
     private final String prefersFood;
-    private int hp;
+    private int hitPoints;
 
     public boolean isReadyToMove() {
         return readyToMove;
@@ -17,78 +17,38 @@ public abstract class Creature extends Entity {
     public void setReadyToMove(boolean readyToMove) {
         this.readyToMove = readyToMove;
     }
-    public Creature(String prefersFood) {
+    public Creature(String prefersFood, int attackPower) {
         this.prefersFood = prefersFood;
-        this.hp = 8;
+        this.hitPoints = 8;
         this.readyToMove = true;
+        this.hungerDamage = 1;
+        this.attackPower = attackPower;
     }
 
-    public int getHp() {
-        return hp;
+    public int getAttackPower() {
+        return attackPower;
+    }
+
+    public int getHitPoints() {
+        return hitPoints;
     }
 
     public String getPrefersFood() {
         return prefersFood;
     }
 
-    public void changeHP(int hp){
-        this.hp = this.hp + hp;
-        if (this.hp > 9) this.hp = 9;
+    public void increaseHitPoints(int hp){
+        this.hitPoints = this.hitPoints + hp;
+        if (this.hitPoints > 9) {
+            this.hitPoints = 9;
+        }
     }
 
-//    abstract HashSet<Coordinates> getValidNearbyCoordinates(HashMap<Coordinates, Entity> oldMap,
-//                                                            HashMap<Coordinates, Entity> newMap,
-//                                                            Coordinates currentCoordinate);
-//
-//    List<Coordinates> backtrace(Map<Coordinates, Coordinates> parent, Coordinates start, Coordinates end) {
-//        List<Coordinates> path = new ArrayList<>();
-//        path.add(end);
-//        Coordinates current = end;
-//        while (!current.equals(start)) {
-//            current = parent.get(current);
-//            path.add(current);
-//        }
-//        Collections.reverse(path);
-//        return path;
-//    }
-//
-//    HashSet<Coordinates> getEmptyValidNearbyCoordinates(HashMap<Coordinates, Entity> oldMap,
-//                                                        HashMap<Coordinates, Entity> newMap,
-//                                                        Coordinates currentCoordinate) {
-//        HashSet<Coordinates> setEmptyValidNearbyCoordinates = new HashSet<>();
-//        if ((currentCoordinate.getColumn() - 1 >= 0) //не выходим за пределы поля
-//                && !(oldMap.containsKey(new Coordinates(currentCoordinate.getColumn() - 1,
-//                currentCoordinate.getRow()))) //клетка не занята в старой коллекции
-//                && !(newMap.containsKey(new Coordinates(currentCoordinate.getColumn() - 1,
-//                currentCoordinate.getRow()))))  //клетка не занята в создаваемой коллекции
-//        {
-//            setEmptyValidNearbyCoordinates.add(new Coordinates(currentCoordinate.getColumn() - 1,
-//                    currentCoordinate.getRow()));
-//        }
-//        if ((currentCoordinate.getColumn() + 1 < GenerateField.getColumn())
-//                && !(oldMap.containsKey(new Coordinates(currentCoordinate.getColumn() + 1,
-//                currentCoordinate.getRow())))
-//                && !(newMap.containsKey(new Coordinates(currentCoordinate.getColumn() + 1,
-//                currentCoordinate.getRow())))) {
-//            setEmptyValidNearbyCoordinates.add(new Coordinates(currentCoordinate.getColumn() + 1,
-//                    currentCoordinate.getRow()));
-//        }
-//        if ((currentCoordinate.getRow() - 1 >= 0)
-//                && !(oldMap.containsKey(new Coordinates(currentCoordinate.getColumn(),
-//                currentCoordinate.getRow() - 1)))
-//                && !(newMap.containsKey(new Coordinates(currentCoordinate.getColumn(),
-//                currentCoordinate.getRow() - 1)))) {
-//            setEmptyValidNearbyCoordinates.add(new Coordinates(currentCoordinate.getColumn(),
-//                    currentCoordinate.getRow() - 1));
-//        }
-//        if ((currentCoordinate.getRow() + 1 < GenerateField.getRow())
-//                && !(oldMap.containsKey(new Coordinates(currentCoordinate.getColumn(),
-//                currentCoordinate.getRow() + 1)))
-//                && !(newMap.containsKey(new Coordinates(currentCoordinate.getColumn(),
-//                currentCoordinate.getRow() + 1)))) {
-//            setEmptyValidNearbyCoordinates.add(new Coordinates(currentCoordinate.getColumn(),
-//                    currentCoordinate.getRow() + 1));
-//        }
-//        return setEmptyValidNearbyCoordinates;
-//    }
+    public void reduceHitPoints(int hp){
+        this.hitPoints = this.hitPoints - hp;
+    }
+
+    public void getHungerDamage() {
+        this.hitPoints = this.hitPoints - hungerDamage;
+    }
 }
