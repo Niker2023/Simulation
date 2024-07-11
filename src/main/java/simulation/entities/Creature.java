@@ -2,9 +2,7 @@ package main.java.simulation.entities;
 
 public abstract class Creature extends Entity {
 
-
-
-    private int attackPower;
+    private final int attackPower;
     private final int hungerDamage;
     private boolean readyToMove;
     private final String prefersFood;
@@ -17,6 +15,7 @@ public abstract class Creature extends Entity {
     public void setReadyToMove(boolean readyToMove) {
         this.readyToMove = readyToMove;
     }
+
     public Creature(String prefersFood, int attackPower) {
         this.prefersFood = prefersFood;
         this.hitPoints = 8;

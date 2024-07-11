@@ -20,7 +20,7 @@ public class Coordinates {
 
     @Override
     public int hashCode() {
-        return column * 100 + row;
+        return column * 1000 + row;
     }
 
     public Coordinates(int column, int row) {

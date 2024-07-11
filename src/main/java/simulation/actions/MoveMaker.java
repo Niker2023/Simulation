@@ -109,4 +109,123 @@ public class MoveMaker extends Action {
         Collections.reverse(path);
         return path;
     }
+
+    public Coordinates getTheNearestTarget(Coordinates coordinates, WorldMap worldMap, String target) {
+        Coordinates nearest = coordinates;
+        double minDistanse = Double.MAX_VALUE;
+        List<Coordinates> targetList;
+        if (target.equals("Grass")) {
+            targetList = worldMap.getGrassPopulation();
+        } else {
+            targetList = worldMap.getHerbivoresPopulation();
+        }
+        for (Coordinates nextGrass : targetList) {
+            double currentDistance = Math.abs((nextGrass.getColumn() - coordinates.getColumn())) +
+                    Math.abs(nextGrass.getRow() - coordinates.getRow());
+            if (currentDistance < minDistanse) {
+                minDistanse = currentDistance;
+                nearest = nextGrass;
+            }
+        }
+        return nearest;
+    }
+
+    class PathFinder {
+
+        class Node implements Comparable<Node>{
+
+            private final Coordinates coordinates;
+            private int pathFromStart;
+            private int pathToTarget;
+            private Node parent;
+
+            public Node(Coordinates coordinates) {
+                this.coordinates = coordinates;
+            }
+
+            public Coordinates getCoordinates() {
+                return coordinates;
+            }
+
+            public int getPathFromStart() {
+                return pathFromStart;
+            }
+
+            public void setPathFromStart(int pathFromStart) {
+                this.pathFromStart = pathFromStart;
+            }
+
+            public int getPathToTarget() {
+                return pathToTarget;
+            }
+
+            public void setPathToTarget(int pathToTarget) {
+                this.pathToTarget = pathToTarget;
+            }
+
+            public Node getParent() {
+                return parent;
+            }
+
+            public void setParent(Node parent) {
+                this.parent = parent;
+            }
+
+            @Override
+            public int compareTo(Node node) {
+                return Double.compare(pathToTarget, node.pathToTarget);
+            }
+        }
+
+        private List<Node> backtrace(Node current) {
+            List<Node> path = new ArrayList<>();
+            while (current != null) {
+                path.add(0, current);
+                current = current.getParent();
+            }
+            return path;
+        }
+
+        private int heuristic(Node current, Node target) {
+            return Math.abs(current.getCoordinates().getColumn() - target.getCoordinates().getColumn())
+                    + Math.abs(current.getCoordinates().getRow() - target.getCoordinates().getRow());
+        }
+
+        private Coordinates getCoordinatesForAction(WorldMap worldMap, Coordinates currentCoordinate, String targetMove) {
+
+            Map<Coordinates, Node> graph = new HashMap<>();
+
+            Queue<Node> queue = new PriorityQueue<>();
+            Node start = new Node(currentCoordinate);
+            queue.add(start);  //Добавляем в очередь начальные координаты
+            graph.put(currentCoordinate, start); //Список посещенных координат
+            //До тех пор, пока не пройдены все ячейки
+            while (!queue.isEmpty()) {
+
+                Node node = queue.poll(); //Работает со следующей ячейкой
+
+
+                if (worldMap.isContainsEntity(node.getCoordinates())
+                        && worldMap.getEntity(node.getCoordinates()).getClass().getSimpleName().equals(targetMove)) {  // Если цель достигнута
+                    return backtrace(node).get(1).getCoordinates();  //Возвращаем следующий шаг для достижения цели
+                }
+
+                for (Coordinates adjacent : getAvailableNearbyCoordinates(worldMap, node.getCoordinates(), targetMove)) {  //Смотрим соседей
+                    Node currentNode = new Node(adjacent);
+                    int pathCost = node.getPathFromStart() + heuristic(node, currentNode);
+                    if (!graph.containsKey(adjacent) || pathCost < currentNode.getPathFromStart()) {
+                        currentNode.setPathFromStart(pathCost);
+                        currentNode.setPathToTarget(pathCost + heuristic(currentNode, getTheNearestTarget(targetMove)));
+
+                        parent.put(adjacent, coordinate);  //Если для текущей координаты нет родителя, добавляем
+                        queue.add(adjacent);  //Добавляем текущую в очередь
+                    }
+                }
+            }
+            return currentCoordinate;
+        }
+
+
+
+    }
 }
