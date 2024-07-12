@@ -24,38 +24,52 @@ public class PathFinder {
     public Coordinates getCoordinatesForAction(WorldMap worldMap, Coordinates currentCoordinate, String targetMove) {
 
         Coordinates targetCoordinates = getTheNearestTarget(currentCoordinate, worldMap, targetMove);
+        System.out.println(" Координаты цели rc " + targetCoordinates.getRow() + targetCoordinates.getColumn());
 
-        Set<Node> visitedNodes = new HashSet<>();
+        Set<Coordinates> visitedNodes = new HashSet<>();
 
         Queue<Node> nodesQueue = new PriorityQueue<>();
         Node start = new Node(currentCoordinate);
         Node finish = new Node(targetCoordinates);
-        start.setPathFromStart(0);
-        start.setPathToTarget(heuristic(start, finish));
         nodesQueue.add(start);  //Добавляем в очередь начальные координаты
-        visitedNodes.add(start); //Список посещенных координат
+        visitedNodes.add(start.getCoordinates()); //Список посещенных координат
+
+        System.out.print("Маршрут rc ");
 
         while (!nodesQueue.isEmpty()) {   //До тех пор, пока не пройдены все ячейки
 
-            Node currentNode = nodesQueue.poll(); //Работает со следующей ячейкой
+
+
+            Node currentNode = nodesQueue.peek(); //Работает со следующей ячейкой
+
+            System.out.println("рассматриваемая нода:" + currentNode.getCoordinates().getRow()+ "_" + currentNode.getCoordinates().getColumn());
 
             if (currentNode.getCoordinates().equals(targetCoordinates)) {  // Если цель достигнута
-                return backtrace(currentNode).get(1).getCoordinates();  //Возвращаем следующий шаг для достижения цели
+                try {
+                    return backtrace(currentNode).get(1).getCoordinates();  //Возвращаем следующий шаг для достижения цели
+                } catch (IndexOutOfBoundsException e) {
+                    return currentCoordinate;
+                }
             }
+            visitedNodes.add(currentNode.getCoordinates());
 
             for (Coordinates adjacent : getAvailableNearbyCoordinates(worldMap, currentNode.getCoordinates(), targetMove)) {  //Смотрим соседей
                 Node adjacentNode = new Node(adjacent);
-                int pathCost = currentNode.getPathFromStart() + heuristic(currentNode, adjacentNode);
-                if (!visitedNodes.contains(adjacentNode) || pathCost < adjacentNode.getPathFromStart()) {
+                System.out.print(adjacent.getRow()+ "_" +adjacent.getColumn() + " -> " );
+
+                int pathCost = currentNode.getPathFromStart() + 1;
+
+                if (!visitedNodes.contains(adjacentNode.getCoordinates()) || pathCost < adjacentNode.getPathFromStart()) {
                     adjacentNode.setPathFromStart(pathCost);
-                    adjacentNode.setPathFromStartToTarget(pathCost + heuristic(adjacentNode, finish));
                     adjacentNode.setPathToTarget(heuristic(adjacentNode, finish));
+                    adjacentNode.setPathFromStartToTarget(pathCost + adjacentNode.getPathToTarget());
                     adjacentNode.setParent(currentNode);
-                    visitedNodes.add(currentNode);
                     nodesQueue.add(adjacentNode);  //Добавляем текущую в очередь
                 }
             }
+            nodesQueue.remove(currentNode);
         }
+        System.out.println();
         return currentCoordinate;
     }
 
@@ -69,8 +83,10 @@ public class PathFinder {
             targetList = worldMap.getHerbivoresPopulation();
         }
         for (Coordinates nextGrass : targetList) {
-            double currentDistance = Math.abs((nextGrass.getColumn() - coordinates.getColumn())) +
-                    Math.abs(nextGrass.getRow() - coordinates.getRow());
+//            double currentDistance = Math.abs((nextGrass.getColumn() - coordinates.getColumn())) +
+//                    Math.abs(nextGrass.getRow() - coordinates.getRow());
+            double currentDistance = Math.sqrt(Math.pow((nextGrass.getColumn() - coordinates.getColumn()), 2) +
+                    Math.pow((nextGrass.getRow() - coordinates.getRow()), 2));
             if (currentDistance < minDistanse) {
                 minDistanse = currentDistance;
                 nearest = nextGrass;
@@ -85,7 +101,7 @@ public class PathFinder {
     }
 
     private HashSet<Coordinates> getAvailableNearbyCoordinates(WorldMap worldMap, Coordinates currentCoordinates, String targetMove) {
-        HashSet<Coordinates> seAvailableNearbyCoordinates = new HashSet<>();
+        HashSet<Coordinates> setAvailableNearbyCoordinates = new HashSet<>();
         Set<Coordinates> nearbyCoordinates = new HashSet<>();
         nearbyCoordinates.add(new Coordinates(currentCoordinates.getColumn() + 1, currentCoordinates.getRow())); //upperCoordinates
         nearbyCoordinates.add(new Coordinates(currentCoordinates.getColumn() -1, currentCoordinates.getRow())); //lowerCoordinates
@@ -94,10 +110,10 @@ public class PathFinder {
 
         for (Coordinates c : nearbyCoordinates) {
             if ((isValidCoordinate(c) && ((!worldMap.isContainsEntity(c)) || worldMap.getEntity(c).getClass().getSimpleName().equals(targetMove)))) {
-                seAvailableNearbyCoordinates.add(c);
+                setAvailableNearbyCoordinates.add(c);
             }
         }
 
-        return seAvailableNearbyCoordinates;
+        return setAvailableNearbyCoordinates;
     }
 }

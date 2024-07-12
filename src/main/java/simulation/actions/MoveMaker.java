@@ -7,7 +7,6 @@ import main.java.simulation.entities.Creature;
 import main.java.simulation.entities.Entity;
 import main.java.simulation.entities.Grass;
 
-import java.util.*;
 
 public class MoveMaker extends Action {
 
@@ -22,15 +21,19 @@ public class MoveMaker extends Action {
                         && ((Creature) worldMap.getEntity(currentCoordinates)).isReadyToMove()) {
                     Creature creature = (Creature) worldMap.getEntity(currentCoordinates);
                     PathFinder pathFinder = new PathFinder();
+                    System.out.print("Поиск пути для " + creature.getClass().getSimpleName() + " из rc " + currentCoordinates.getRow()+currentCoordinates.getColumn());
                     Coordinates coordinatesForAction = pathFinder.getCoordinatesForAction(worldMap, currentCoordinates, creature.getPrefersFood());
 
-                    if (coordinatesForAction.equals(currentCoordinates)) {
+                    if (coordinatesForAction.equals(currentCoordinates)) { //ходить некуда, стоим на месте
                         hungryDamage(creature);
                     } else if (!worldMap.isContainsEntity(coordinatesForAction)) {
                         worldMap.moveCreates(currentCoordinates, coordinatesForAction);
                         hungryDamage(creature);
                     } else {
-                        eatFood(creature, worldMap.getEntity(coordinatesForAction));
+//                        eatFood(creature, worldMap.getEntity(coordinatesForAction));
+                        if (eatFood(creature, worldMap.getEntity(coordinatesForAction))) {
+                            worldMap.remoteEntity(coordinatesForAction);
+                        }
                     }
                     creature.setReadyToMove(false);
                     }
@@ -38,12 +41,14 @@ public class MoveMaker extends Action {
             }
         }
 
-    private void eatFood(Creature creature, Entity entity) {
+    private boolean eatFood(Creature creature, Entity entity) {
         creature.increaseHitPoints(creature.getAttackPower());
         if (entity.getClass().getSimpleName().equals("Grass")) {
             ((Grass) entity).eatIt(creature.getAttackPower());
+            return ((Grass) entity).getGrowthProgress() < 1;
         } else {
             ((Creature) entity).reduceHitPoints(creature.getAttackPower());
+            return ((Creature) entity).getHitPoints() < 1;
         }
     }
 
