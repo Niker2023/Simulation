@@ -4,7 +4,7 @@ public abstract class Creature extends Entity {
 
 
 
-    private int attackPower;
+    private final int attackPower;
     private final int hungerDamage;
     private boolean readyToMove;
     private final String prefersFood;

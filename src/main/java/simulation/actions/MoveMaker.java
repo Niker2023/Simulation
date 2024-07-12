@@ -26,9 +26,13 @@ public class MoveMaker extends Action {
                         hungryDamage(creature);
                     } else if (!worldMap.isContainsEntity(coordinatesForAction)) {
                         worldMap.moveCreates(currentCoordinates, coordinatesForAction);
-                        hungryDamage(creature);
+                        if (hungryDamage(creature)){
+                            worldMap.remoteEntity(coordinatesForAction);
+                        }
                     } else {
-                        eatFood(creature, worldMap.getEntity(coordinatesForAction));
+                        if (eatFood(creature, worldMap.getEntity(coordinatesForAction))) {
+                            worldMap.remoteEntity(coordinatesForAction);
+                        }
                     }
                     creature.setReadyToMove(false);
                     }
@@ -36,12 +40,14 @@ public class MoveMaker extends Action {
             }
         }
 
-    private void eatFood(Creature creature, Entity entity) {
+    private boolean eatFood(Creature creature, Entity entity) {
         creature.increaseHitPoints(creature.getAttackPower());
         if (entity.getClass().getSimpleName().equals("Grass")) {
             ((Grass) entity).eatIt(creature.getAttackPower());
+            return ((Grass) entity).getGrowthProgress() < 1;
         } else {
             ((Creature) entity).reduceHitPoints(creature.getAttackPower());
+            return ((Creature) entity).getHitPoints() < 1;
         }
     }
 
@@ -67,8 +73,9 @@ public class MoveMaker extends Action {
                 && coordinates.getRow() >= 0 && coordinates.getRow() < WorldMap.get().getRow();
     }
 
-    private void hungryDamage(Creature creature) {
+    private boolean hungryDamage(Creature creature) {
         creature.getHungerDamage();
+        return creature.getHitPoints() < 1;
     }
 
     private Coordinates getCoordinatesForAction(WorldMap worldMap, Coordinates currentCoordinate, String targetMove) {

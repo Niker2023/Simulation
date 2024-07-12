@@ -36,7 +36,6 @@ public class Simulation implements Runnable {
         turnAction.add(new PrepareCreaturesToMove());
         turnAction.add(new MoveMaker());
         turnAction.add(new GrassGrower());
-        turnAction.add(new MapCleaner());
         turnAction.add(new MigrateCreators());
 
     }
